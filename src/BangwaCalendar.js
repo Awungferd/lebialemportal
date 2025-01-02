@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -28,35 +27,36 @@ export const BangwaCalendar = () => {
   }, []);
 
   const getBangwaDay = (date) => {
-    const currentTimestamp = date.getTime() / 1000;
+    const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const currentTimestamp = utcDate.getTime() / 1000;
     const daysSinceCycleStart = Math.floor((currentTimestamp - startOfCycle) / 86400);
     const index = daysSinceCycleStart % 8;
     return bangwaDays[index < 0 ? index + 8 : index];
   };
 
   const getEnglishDay = (date) => {
-    return englishDays[date.getDay()];
+    return englishDays[date.getUTCDay()];
   };
 
   const getDaysInMonth = (year, month) => {
-    return new Date(year, month + 1, 0).getDate();
+    return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
   };
 
   const generateCalendarDays = () => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+    const year = currentDate.getUTCFullYear();
+    const month = currentDate.getUTCMonth();
     const daysInMonth = getDaysInMonth(year, month);
     const firstDayOfMonth = new Date(Date.UTC(year, month, 1));
     const days = [];
 
     let startDate = new Date(firstDayOfMonth);
     while (getBangwaDay(startDate) !== 'Ankoah') {
-      startDate.setDate(startDate.getDate() - 1);
+      startDate.setUTCDate(startDate.getUTCDate() - 1);
     }
 
     while (startDate < firstDayOfMonth) {
       days.push({ day: null, englishDay: getEnglishDay(startDate), isCurrentMonth: false });
-      startDate.setDate(startDate.getDate() + 1);
+      startDate.setUTCDate(startDate.getUTCDate() + 1);
     }
 
     for (let day = 1; day <= daysInMonth; day++) {
@@ -74,8 +74,7 @@ export const BangwaCalendar = () => {
 
   const changeMonth = (increment) => {
     setCurrentDate(prevDate => {
-      const newDate = new Date(prevDate);
-      newDate.setMonth(prevDate.getMonth() + increment);
+      const newDate = new Date(Date.UTC(prevDate.getUTCFullYear(), prevDate.getUTCMonth() + increment, 1));
       return newDate;
     });
   };
@@ -98,8 +97,8 @@ export const BangwaCalendar = () => {
     }
 
     const bangwaDay = getBangwaDay(date);
-    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
-    setConvertedDate(`${formattedDate} is ${bangwaDay} in Nweh`);
+    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+    setConvertedDate(`${formattedDate} is ${bangwaDay} in the Bangwa Calendar`);
   };
 
   const calendarDays = generateCalendarDays();
