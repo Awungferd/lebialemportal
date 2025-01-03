@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import mbechaThumb from './mbechaThumb.jpg';
 
 export const BangwaCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -11,7 +12,7 @@ export const BangwaCalendar = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const gridRef = useRef(null);
   
-  const startOfCycle = Date.UTC(1970, 4, 24) / 1000; // May 24, 1970 in UTC
+  const startOfCycle = Date.UTC(1970, 4, 24) / 1000;
   const bangwaDays = ['Ankoah', 'Anzoah', 'Alena', 'Amina', 'Afeah', 'Angong', 'Aseih', 'Alung'];
   const englishDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -112,6 +113,7 @@ export const BangwaCalendar = () => {
     backgroundColor: '#f0f4f8',
     borderRadius: '8px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    position: 'relative',
   };
 
   const headerStyle = {
@@ -177,7 +179,7 @@ export const BangwaCalendar = () => {
     left: '50%',
     transform: 'translate(-50%, -50%) rotate(-45deg)',
     whiteSpace: 'nowrap',
-    fontSize: isDesktop ? '0.9em' : '0.9em',
+    fontSize: isDesktop ? '0.9em' : '0.8em',
     fontWeight: 'bold',
     color: '#ecf0f1',
     textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
@@ -217,6 +219,7 @@ export const BangwaCalendar = () => {
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
   };
+
   const attributionStyle = {
     position: 'absolute',
     bottom: '10px',
@@ -233,6 +236,7 @@ export const BangwaCalendar = () => {
     borderRadius: '50%',
     marginRight: '5px',
   };
+
   return (
     <div style={containerStyle}>
       <div style={headerStyle}>
@@ -240,7 +244,7 @@ export const BangwaCalendar = () => {
           <ChevronLeft size={16} />
         </button>
         <h2 style={titleStyle}>
-          {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+          {monthNames[currentDate.getUTCMonth()]} {currentDate.getUTCFullYear()}
         </h2>
         <button onClick={() => changeMonth(1)} style={buttonStyle}>
           <ChevronRight size={16} />
@@ -273,7 +277,7 @@ export const BangwaCalendar = () => {
       </div>
       <div>
         <form onSubmit={handleDateConversion} style={formStyle}>
-          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert dates - past or future</label>
+          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert Date to Bangwa Calendar:</label>
           <div style={inputContainerStyle}>
             <input
               type="number"
@@ -309,7 +313,7 @@ export const BangwaCalendar = () => {
       </div>
       <div style={attributionStyle}>
         <img 
-          src="./mbechaThumb.jpg" 
+          src={mbechaThumb} 
           alt="Author thumbnail" 
           style={thumbnailStyle}
         />
