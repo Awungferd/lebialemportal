@@ -12,7 +12,7 @@ export const BangwaCalendar = () => {
   const gridRef = useRef(null);
   
   const startOfCycle = Date.UTC(1970, 4, 24) / 1000; // May 24, 1970 in UTC
-  const bangwaDays = ['Ankoah', 'Anzoah', 'Alena', 'Amina', 'Afeah', 'Agong', 'Aseih', 'Alung'];
+  const bangwaDays = ['Ankoah', 'Anzoah', 'Alena', 'Amina', 'Afeah', 'Angong', 'Aseih', 'Alung'];
   const englishDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -217,7 +217,22 @@ export const BangwaCalendar = () => {
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
   };
+  const attributionStyle = {
+    position: 'absolute',
+    bottom: '10px',
+    right: '10px',
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '12px',
+    color: '#2c3e50',
+  };
 
+  const thumbnailStyle = {
+    width: '30px',
+    height: '30px',
+    borderRadius: '50%',
+    marginRight: '5px',
+  };
   return (
     <div style={containerStyle}>
       <div style={headerStyle}>
@@ -258,7 +273,7 @@ export const BangwaCalendar = () => {
       </div>
       <div>
         <form onSubmit={handleDateConversion} style={formStyle}>
-          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Conver a date to Nweh:</label>
+          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert dates - past or future</label>
           <div style={inputContainerStyle}>
             <input
               type="number"
@@ -291,6 +306,14 @@ export const BangwaCalendar = () => {
         {convertedDate && (
           <div style={{marginTop: '8px', fontWeight: 'bold', color: '#2c3e50'}}>{convertedDate}</div>
         )}
+      </div>
+      <div style={attributionStyle}>
+        <img 
+          src="./mbechaThumb.jpg" 
+          alt="Author thumbnail" 
+          style={thumbnailStyle}
+        />
+        <span>By Mbechanyi-a-Ndungalleh</span>
       </div>
     </div>
   );
