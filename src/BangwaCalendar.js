@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -10,7 +11,7 @@ export const BangwaCalendar = () => {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const gridRef = useRef(null);
   
-  const startOfCycle = new Date('1970-05-24T00:00:00-07:00').getTime() / 1000; // Adjusted for PST
+  const startOfCycle = Date.UTC(1970, 4, 24) / 1000; // May 24, 1970 in UTC
   const bangwaDays = ['Ankoah', 'Anzoah', 'Alena', 'Amina', 'Afeah', 'Agong', 'Aseih', 'Alung'];
   const englishDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -27,25 +28,23 @@ export const BangwaCalendar = () => {
   }, []);
 
   const getBangwaDay = (date) => {
-    const pstDate = new Date(date.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
-    const currentTimestamp = pstDate.getTime() / 1000;
-    const daysSinceCycleStart = Math.floor((currentTimestamp - startOfCycle) / 86400);
+    const utcTimestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000;
+    const daysSinceCycleStart = Math.floor((utcTimestamp - startOfCycle) / 86400);
     const index = daysSinceCycleStart % 8;
     return bangwaDays[index < 0 ? index + 8 : index];
   };
 
   const getEnglishDay = (date) => {
-    const pstDate = new Date(date.toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
-    return englishDays[pstDate.getDay()];
+    return englishDays[date.getUTCDay()];
   };
 
   const getDaysInMonth = (year, month) => {
-    return new Date(year, month + 1, 0).getDate();
+    return new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
   };
 
   const generateCalendarDays = () => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
+    const year = currentDate.getUTCFullYear();
+    const month = currentDate.getUTCMonth();
     const daysInMonth = getDaysInMonth(year, month);
     const firstDayOfMonth = new Date(Date.UTC(year, month, 1));
     const days = [];
@@ -98,7 +97,7 @@ export const BangwaCalendar = () => {
     }
 
     const bangwaDay = getBangwaDay(date);
-    const formattedDate = date.toLocaleDateString('en-US', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: "America/Los_Angeles" });
+    const formattedDate = date.toUTCString().split(' ').slice(0, 4).join(' ');
     setConvertedDate(`${formattedDate} is ${bangwaDay} in the Bangwa Calendar`);
   };
 
