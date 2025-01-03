@@ -221,18 +221,24 @@ export const BangwaCalendar = () => {
   };
 
   const attributionStyle = {
-    position: 'absolute',
+   // position: 'absolute',
     bottom: '10px',
     right: '10px',
     display: 'flex',
     alignItems: 'center',
-    fontSize: '12px',
+    fontSize: '14px',
+    fontWeight: 'bold',
     color: '#2c3e50',
+    backgroundColor: '#bdc3c7',
+    borderRadius: '10% 30% 30% 10%',
+    width: 'fit-content',
+    padding: '4px 8px',
+   
   };
 
   const thumbnailStyle = {
     width: '50px',
-    height: '50px',
+    height: '60px',
     borderRadius: '50%',
     marginRight: '5px',
   };
@@ -277,7 +283,7 @@ export const BangwaCalendar = () => {
       </div>
       <div>
         <form onSubmit={handleDateConversion} style={formStyle}>
-          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert Date to Bangwa Calendar:</label>
+          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert Date to Nweh:</label>
           <div style={inputContainerStyle}>
             <input
               type="number"
@@ -310,15 +316,15 @@ export const BangwaCalendar = () => {
         {convertedDate && (
           <div style={{marginTop: '8px', fontWeight: 'bold', color: '#2c3e50'}}>{convertedDate}</div>
         )}
-      </div>
+      </div>  
       <div style={attributionStyle}>
         <img 
           src={mbechaThumb} 
           alt="Author thumbnail" 
           style={thumbnailStyle}
         />
-        <span>By Mbechanyi-a-Ndungalleh</span>
-      </div>
+        <span>By Mbechanyi</span>
+      </div>   
     </div>
   );
 };
