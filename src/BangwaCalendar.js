@@ -231,8 +231,8 @@ export const BangwaCalendar = () => {
   };
 
   const thumbnailStyle = {
-    width: '30px',
-    height: '30px',
+    width: '50px',
+    height: '50px',
     borderRadius: '50%',
     marginRight: '5px',
   };
