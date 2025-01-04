@@ -1,8 +1,8 @@
 {
-  "name": "calendarfrontend",
+  "name": "lebialemportal",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Awungferd.github.io/calendarfrontend",
+  "homepage": "https://Awungferd.github.io/lebialemportal",
   "dependencies": {
     "autoprefixer": "^10.4.20",
     "cra-template": "1.2.0",
