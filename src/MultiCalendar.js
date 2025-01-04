@@ -1,38 +1,39 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import mbechaThumb from './mbechaThumb.jpg';
 
-export const BangwaCalendar = () => {
+const MultiCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [inputDay, setInputDay] = useState('');
   const [inputMonth, setInputMonth] = useState('');
   const [inputYear, setInputYear] = useState('');
   const [convertedDate, setConvertedDate] = useState('');
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
-  const gridRef = useRef(null);
-  
+  const [selectedCalendar, setSelectedCalendar] = useState('nweh');
+
   const startOfCycle = Date.UTC(1970, 4, 24) / 1000;
-  const bangwaDays = ['Ankoah', 'Anzoah', 'Alena', 'Amina', 'Afeah', 'Angong', 'Aseih', 'Alung'];
+  const nwehDays = ['Ankoah', 'Anzoah', 'Alena', 'Amina', 'Afeah', 'Agong', 'Aseih', 'Alung'];
+  const upperMmuockDays = ['Ngangà', 'Mbeqgnúá', 'Mbeqlěq', 'Njœêngong', 'Mbeqńkœó', 'Njœêlekœr̄', 'Fa‌ꞌà', 'Télǎng'];
+  const mmockbieDays = ['Ngangà', 'Betaâgnúá', 'Mbeqlěq', 'Ngong', 'Mbeqńkœó', 'Njœêlekœr̄', 'Fa‌ꞌà', 'Télǎng'];
+  const mundaniDays = ['Aghà̧', 'Abù‌ꞌ', 'Ngȩ̀', 'Kèlu̧', 'Èwenesa̧', 'Èwenelà̧', 'Nkwanyȩ', 'Mèndeè'];
   const englishDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const getBangwaDay = (date) => {
+  const getLocalDay = (date) => {
     const utcTimestamp = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000;
     const daysSinceCycleStart = Math.floor((utcTimestamp - startOfCycle) / 86400);
     const index = daysSinceCycleStart % 8;
-    return bangwaDays[index < 0 ? index + 8 : index];
+    switch (selectedCalendar) {
+      case 'upperMmuock':
+        return upperMmuockDays[index < 0 ? index + 8 : index];
+      case 'mmockbie':
+        return mmockbieDays[index < 0 ? index + 8 : index];
+      case 'mundani':
+        return mundaniDays[index < 0 ? index + 8 : index];
+      default:
+        return nwehDays[index < 0 ? index + 8 : index];
+    }
   };
 
   const getEnglishDay = (date) => {
@@ -51,7 +52,7 @@ export const BangwaCalendar = () => {
     const days = [];
 
     let startDate = new Date(firstDayOfMonth);
-    while (getBangwaDay(startDate) !== 'Ankoah') {
+    while (getLocalDay(startDate) !== (selectedCalendar === 'nweh' ? 'Ankoah' : (selectedCalendar === 'upperMmuock' || selectedCalendar === 'mmockbie' ? 'Ngangà' : 'Aghà̧'))) {
       startDate.setUTCDate(startDate.getUTCDate() - 1);
     }
 
@@ -97,23 +98,22 @@ export const BangwaCalendar = () => {
       return;
     }
 
-    const bangwaDay = getBangwaDay(date);
+    const localDay = getLocalDay(date);
     const formattedDate = date.toUTCString().split(' ').slice(0, 4).join(' ');
-    setConvertedDate(`${formattedDate} is ${bangwaDay} in the Bangwa Calendar`);
+    setConvertedDate(`${formattedDate} is ${localDay} in the ${selectedCalendar.charAt(0).toUpperCase() + selectedCalendar.slice(1)} Calendar`);
   };
 
   const calendarDays = generateCalendarDays();
 
   const containerStyle = {
-    width: isDesktop ? '600px' : '100%',
+    width: '100%',
     maxWidth: '600px',
     margin: '0 auto',
     padding: '16px',
-    fontSize: isDesktop ? '14px' : '12px',
+    fontSize: '14px',
     backgroundColor: '#f0f4f8',
     borderRadius: '8px',
     boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-    position: 'relative',
   };
 
   const headerStyle = {
@@ -166,25 +166,27 @@ export const BangwaCalendar = () => {
 
   const headerCellStyle = {
     ...cellStyle,
-    fontWeight: 'bold',
     backgroundColor: '#34495e',
     color: '#ecf0f1',
+    fontSize: '0.8em',
+    padding: '4px',
     position: 'relative',
-    overflow: 'hidden',
+    height: '60px',
+    width: 'calc(100% - 8px)', // Adjust width to account for padding
   };
 
-  const diagonalTextStyle = {
+  const headerTextStyle = {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%) rotate(-45deg)',
+    bottom: '2px',
+    left: '2px',
+    transform: 'rotate(-45deg)',
+    transformOrigin: 'left bottom',
+    width: '200%', // Increase width to prevent text clipping
+    textAlign: 'left',
     whiteSpace: 'nowrap',
-    fontSize: isDesktop ? '0.9em' : '0.8em',
-    fontWeight: 'bold',
-    color: '#ecf0f1',
-    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-    width: '140%',
-    textAlign: 'center',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    paddingLeft: '10px', // Add left padding to prevent text clipping
   };
 
   const formStyle = {
@@ -198,7 +200,7 @@ export const BangwaCalendar = () => {
 
   const inputContainerStyle = {
     display: 'flex',
-    flexDirection: isDesktop ? 'row' : 'column',
+    flexDirection: 'row',
     gap: '8px',
   };
 
@@ -220,27 +222,16 @@ export const BangwaCalendar = () => {
     transition: 'background-color 0.3s ease',
   };
 
-  const attributionStyle = {
-   // position: 'absolute',
-    bottom: '10px',
-    right: '10px',
+  const radioGroupStyle = {
     display: 'flex',
-    alignItems: 'center',
-    fontSize: '14px',
-    fontWeight: 'bold',
-    color: '#2c3e50',
-    backgroundColor: '#bdc3c7',
-    borderRadius: '10% 30% 30% 10%',
-    width: 'fit-content',
-    padding: '4px 8px',
-   
+    justifyContent: 'space-between',
+    marginBottom: '16px',
   };
 
-  const thumbnailStyle = {
-    width: '50px',
-    height: '60px',
-    borderRadius: '50%',
-    marginRight: '5px',
+  const radioLabelStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
   };
 
   return (
@@ -256,14 +247,51 @@ export const BangwaCalendar = () => {
           <ChevronRight size={16} />
         </button>
       </div>
-      <div ref={gridRef} style={gridStyle}>
-        {bangwaDays.map(day => (
+      <div style={radioGroupStyle}>
+        <label style={radioLabelStyle}>
+          <input
+            type="radio"
+            value="nweh"
+            checked={selectedCalendar === 'nweh'}
+            onChange={(e) => setSelectedCalendar(e.target.value)}
+          />
+          Nweh
+        </label>
+        <label style={radioLabelStyle}>
+          <input
+            type="radio"
+            value="upperMmuock"
+            checked={selectedCalendar === 'upperMmuock'}
+            onChange={(e) => setSelectedCalendar(e.target.value)}
+          />
+          Upper Mmuock
+        </label>
+        <label style={radioLabelStyle}>
+          <input
+            type="radio"
+            value="mmockbie"
+            checked={selectedCalendar === 'mmockbie'}
+            onChange={(e) => setSelectedCalendar(e.target.value)}
+          />
+          Mmockbie
+        </label>
+        <label style={radioLabelStyle}>
+          <input
+            type="radio"
+            value="mundani"
+            checked={selectedCalendar === 'mundani'}
+            onChange={(e) => setSelectedCalendar(e.target.value)}
+          />
+          Wabane
+        </label>
+      </div>
+      <div style={gridStyle}>
+        {(selectedCalendar === 'nweh' ? nwehDays :
+          selectedCalendar === 'upperMmuock' ? upperMmuockDays :
+          selectedCalendar === 'mmockbie' ? mmockbieDays :
+          mundaniDays).map(day => (
           <div key={day} style={headerCellStyle}>
-            {isDesktop ? (
-              day
-            ) : (
-              <span style={diagonalTextStyle}>{day}</span>
-            )}
+            <span style={headerTextStyle}>{day}</span>
           </div>
         ))}
         {calendarDays.map((day, index) => (
@@ -283,7 +311,7 @@ export const BangwaCalendar = () => {
       </div>
       <div>
         <form onSubmit={handleDateConversion} style={formStyle}>
-          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert Date to Nweh:</label>
+          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert Date to Local Calendar:</label>
           <div style={inputContainerStyle}>
             <input
               type="number"
@@ -316,15 +344,9 @@ export const BangwaCalendar = () => {
         {convertedDate && (
           <div style={{marginTop: '8px', fontWeight: 'bold', color: '#2c3e50'}}>{convertedDate}</div>
         )}
-      </div>  
-      <div style={attributionStyle}>
-        <img 
-          src={mbechaThumb} 
-          alt="Author thumbnail" 
-          style={thumbnailStyle}
-        />
-        <span>By Mbechanyi</span>
-      </div>   
+      </div>
     </div>
   );
 };
+
+export default MultiCalendar;
