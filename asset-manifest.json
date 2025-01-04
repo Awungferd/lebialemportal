@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/calendarfrontend/static/css/main.e6c13ad2.css",
-    "main.js": "/calendarfrontend/static/js/main.b834ee03.js",
-    "static/js/488.6d157f25.chunk.js": "/calendarfrontend/static/js/488.6d157f25.chunk.js",
-    "index.html": "/calendarfrontend/index.html",
-    "main.e6c13ad2.css.map": "/calendarfrontend/static/css/main.e6c13ad2.css.map",
-    "main.b834ee03.js.map": "/calendarfrontend/static/js/main.b834ee03.js.map",
-    "488.6d157f25.chunk.js.map": "/calendarfrontend/static/js/488.6d157f25.chunk.js.map"
+    "main.css": "/lebialemportal/static/css/main.e6c13ad2.css",
+    "main.js": "/lebialemportal/static/js/main.859d20a2.js",
+    "static/js/488.047af53e.chunk.js": "/lebialemportal/static/js/488.047af53e.chunk.js",
+    "index.html": "/lebialemportal/index.html",
+    "main.e6c13ad2.css.map": "/lebialemportal/static/css/main.e6c13ad2.css.map",
+    "main.859d20a2.js.map": "/lebialemportal/static/js/main.859d20a2.js.map",
+    "488.047af53e.chunk.js.map": "/lebialemportal/static/js/488.047af53e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.b834ee03.js"
+    "static/js/main.859d20a2.js"
   ]
 }
