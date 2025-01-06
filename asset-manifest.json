@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/lebialemportal/static/css/main.ad05d871.css",
-    "main.js": "/lebialemportal/static/js/main.859d20a2.js",
+    "main.css": "/lebialemportal/static/css/main.9062c5d9.css",
+    "main.js": "/lebialemportal/static/js/main.3fd352f9.js",
     "static/js/488.047af53e.chunk.js": "/lebialemportal/static/js/488.047af53e.chunk.js",
     "index.html": "/lebialemportal/index.html",
-    "main.ad05d871.css.map": "/lebialemportal/static/css/main.ad05d871.css.map",
-    "main.859d20a2.js.map": "/lebialemportal/static/js/main.859d20a2.js.map",
+    "main.9062c5d9.css.map": "/lebialemportal/static/css/main.9062c5d9.css.map",
+    "main.3fd352f9.js.map": "/lebialemportal/static/js/main.3fd352f9.js.map",
     "488.047af53e.chunk.js.map": "/lebialemportal/static/js/488.047af53e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ad05d871.css",
-    "static/js/main.859d20a2.js"
+    "static/css/main.9062c5d9.css",
+    "static/js/main.3fd352f9.js"
   ]
 }
