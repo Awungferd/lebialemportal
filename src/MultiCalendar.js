@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import './MultiCalendar.css';
 
 const MultiCalendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -14,7 +15,7 @@ const MultiCalendar = () => {
   const nwehDays = ['Ankoah', 'Anzoah', 'Alena', 'Amina', 'Afeah', 'Agong', 'Aseih', 'Alung'];
   const upperMmuockDays = ['Ngangà', 'Mbeqgnúá', 'Mbeqlěq', 'Njœêngong', 'Mbeqńkœó', 'Njœêlekœr̄', 'Fa‌ꞌà', 'Télǎng'];
   const mmockbieDays = ['Ngangà', 'Betaâgnúá', 'Mbeqlěq', 'Ngong', 'Mbeqńkœó', 'Njœêlekœr̄', 'Fa‌ꞌà', 'Télǎng'];
-  const mundaniDays = ['Aghà̧', 'Abù‌ꞌ', 'Ngȩ̀', 'Kèlu̧', 'Èwenesa̧', 'Èwenelà̧', 'Nkwanyȩ', 'Mèndeè'];
+  const mundaneDays = ['Aghà̧', 'Abù‌ꞌ', 'Ngȩ̀', 'Kèlu̧', 'Èwenesa̧', 'Èwenelà̧', 'Nkwanyȩ', 'Mèndeè'];
   const englishDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
@@ -29,8 +30,8 @@ const MultiCalendar = () => {
         return upperMmuockDays[index < 0 ? index + 8 : index];
       case 'mmockbie':
         return mmockbieDays[index < 0 ? index + 8 : index];
-      case 'mundani':
-        return mundaniDays[index < 0 ? index + 8 : index];
+      case 'mundane':
+        return mundaneDays[index < 0 ? index + 8 : index];
       default:
         return nwehDays[index < 0 ? index + 8 : index];
     }
@@ -100,155 +101,26 @@ const MultiCalendar = () => {
 
     const localDay = getLocalDay(date);
     const formattedDate = date.toUTCString().split(' ').slice(0, 4).join(' ');
-    setConvertedDate(`${formattedDate} is ${localDay} in the ${selectedCalendar.charAt(0).toUpperCase() + selectedCalendar.slice(1)} Calendar`);
+    setConvertedDate(`${formattedDate} corresponds to ${localDay} in the ${selectedCalendar.charAt(0).toUpperCase() + selectedCalendar.slice(1)} Calendar`);
   };
 
   const calendarDays = generateCalendarDays();
 
-  const containerStyle = {
-    width: '100%',
-    maxWidth: '600px',
-    margin: '0 auto',
-    padding: '16px',
-    fontSize: '14px',
-    backgroundColor: '#f0f4f8',
-    borderRadius: '8px',
-    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-  };
-
-  const headerStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: '16px',
-    padding: '8px',
-    backgroundColor: '#2c3e50',
-    color: '#ecf0f1',
-    borderRadius: '4px',
-  };
-
-  const buttonStyle = {
-    padding: '8px',
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    color: '#ecf0f1',
-  };
-
-  const titleStyle = {
-    fontSize: '1.25rem',
-    fontWeight: 'bold',
-  };
-
-  const gridStyle = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(8, 1fr)',
-    gap: '2px',
-    marginBottom: '16px',
-    backgroundColor: '#ecf0f1',
-    padding: '8px',
-    borderRadius: '4px',
-  };
-
-  const cellStyle = {
-    aspectRatio: '1',
-    textAlign: 'center',
-    padding: '2px',
-    border: '1px solid #bdc3c7',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    borderRadius: '4px',
-    transition: 'background-color 0.3s ease',
-  };
-
-  const headerCellStyle = {
-    ...cellStyle,
-    backgroundColor: '#34495e',
-    color: '#ecf0f1',
-    fontSize: '0.8em',
-    padding: '4px',
-    position: 'relative',
-    height: '60px',
-    width: 'calc(100% - 8px)', // Adjust width to account for padding
-  };
-
-  const headerTextStyle = {
-    position: 'absolute',
-    bottom: '2px',
-    left: '2px',
-    transform: 'rotate(-45deg)',
-    transformOrigin: 'left bottom',
-    width: '200%', // Increase width to prevent text clipping
-    textAlign: 'left',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    paddingLeft: '10px', // Add left padding to prevent text clipping
-  };
-
-  const formStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    backgroundColor: '#ecf0f1',
-    padding: '16px',
-    borderRadius: '4px',
-  };
-
-  const inputContainerStyle = {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '8px',
-  };
-
-  const inputStyle = {
-    padding: '8px',
-    border: '1px solid #bdc3c7',
-    borderRadius: '4px',
-    width: '100%',
-    backgroundColor: '#fff',
-  };
-
-  const submitButtonStyle = {
-    padding: '8px',
-    backgroundColor: '#3498db',
-    color: 'white',
-    border: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-    transition: 'background-color 0.3s ease',
-  };
-
-  const radioGroupStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginBottom: '16px',
-  };
-
-  const radioLabelStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
-  };
-
   return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        <button onClick={() => changeMonth(-1)} style={buttonStyle}>
+    <div className="calendar-container">
+      <div className="calendar-header">
+        <button onClick={() => changeMonth(-1)} className="calendar-button">
           <ChevronLeft size={16} />
         </button>
-        <h2 style={titleStyle}>
+        <h2 className="calendar-title">
           {monthNames[currentDate.getUTCMonth()]} {currentDate.getUTCFullYear()}
         </h2>
-        <button onClick={() => changeMonth(1)} style={buttonStyle}>
+        <button onClick={() => changeMonth(1)} className="calendar-button">
           <ChevronRight size={16} />
         </button>
       </div>
-      <div style={radioGroupStyle}>
-        <label style={radioLabelStyle}>
+      <div className="calendar-radio-group">
+        <label className="calendar-radio-label">
           <input
             type="radio"
             value="nweh"
@@ -257,7 +129,7 @@ const MultiCalendar = () => {
           />
           Nweh
         </label>
-        <label style={radioLabelStyle}>
+        <label className="calendar-radio-label">
           <input
             type="radio"
             value="upperMmuock"
@@ -266,7 +138,7 @@ const MultiCalendar = () => {
           />
           Upper Mmuock
         </label>
-        <label style={radioLabelStyle}>
+        <label className="calendar-radio-label">
           <input
             type="radio"
             value="mmockbie"
@@ -275,50 +147,46 @@ const MultiCalendar = () => {
           />
           Mmockbie
         </label>
-        <label style={radioLabelStyle}>
+        <label className="calendar-radio-label">
           <input
             type="radio"
-            value="mundani"
-            checked={selectedCalendar === 'mundani'}
+            value="mundane"
+            checked={selectedCalendar === 'mundane'}
             onChange={(e) => setSelectedCalendar(e.target.value)}
           />
           Wabane
         </label>
       </div>
-      <div style={gridStyle}>
+      <div className="calendar-grid">
         {(selectedCalendar === 'nweh' ? nwehDays :
           selectedCalendar === 'upperMmuock' ? upperMmuockDays :
           selectedCalendar === 'mmockbie' ? mmockbieDays :
-          mundaniDays).map(day => (
-          <div key={day} style={headerCellStyle}>
-            <span style={headerTextStyle}>{day}</span>
+          mundaneDays).map(day => (
+          <div key={day} className="calendar-header-cell">
+            <span className="calendar-header-text">{day}</span>
           </div>
         ))}
         {calendarDays.map((day, index) => (
-          <div key={index} style={{
-            ...cellStyle, 
-            backgroundColor: day.isCurrentMonth ? '#fff' : '#f5f5f5',
-            color: day.isCurrentMonth ? '#333' : '#999',
-          }}>
+          <div key={index} className={`calendar-cell ${day.isCurrentMonth ? 'current-month' : 'other-month'}`}>
             {day.day && (
               <>
-                <div style={{fontSize: '1em', fontWeight: 'bold'}}>{day.day}</div>
-                <div style={{fontSize: '0.7em', color: '#666'}}>{day.englishDay}</div>
+                <div className="day-number">{day.day}</div>
+                <div className="english-day">{day.englishDay}</div>
               </>
             )}
           </div>
         ))}
       </div>
-      <div>
-        <form onSubmit={handleDateConversion} style={formStyle}>
-          <label style={{fontWeight: 'bold', color: '#2c3e50'}}>Convert Date to Local Calendar:</label>
-          <div style={inputContainerStyle}>
+      <div className="calendar-form-container">
+        <form onSubmit={handleDateConversion} className="calendar-form">
+          <label className="form-label">Convert Date to Local Calendar:</label>
+          <div className="calendar-input-container">
             <input
               type="number"
               value={inputDay}
               onChange={(e) => setInputDay(e.target.value)}
               placeholder="Day"
-              style={inputStyle}
+              className="calendar-input"
               min="1"
               max="31"
             />
@@ -327,7 +195,7 @@ const MultiCalendar = () => {
               value={inputMonth}
               onChange={(e) => setInputMonth(e.target.value)}
               placeholder="Month"
-              style={inputStyle}
+              className="calendar-input"
               min="1"
               max="12"
             />
@@ -336,13 +204,13 @@ const MultiCalendar = () => {
               value={inputYear}
               onChange={(e) => setInputYear(e.target.value)}
               placeholder="Year"
-              style={inputStyle}
+              className="calendar-input"
             />
           </div>
-          <button type="submit" style={submitButtonStyle}>Convert</button>
+          <button type="submit" className="calendar-submit-button">Convert</button>
         </form>
         {convertedDate && (
-          <div style={{marginTop: '8px', fontWeight: 'bold', color: '#2c3e50'}}>{convertedDate}</div>
+          <div className="converted-date-result">{convertedDate}</div>
         )}
       </div>
     </div>
@@ -350,3 +218,4 @@ const MultiCalendar = () => {
 };
 
 export default MultiCalendar;
+
